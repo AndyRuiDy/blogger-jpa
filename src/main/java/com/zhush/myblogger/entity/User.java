@@ -10,5 +10,11 @@ public class User {
 
     public String password;
 
+    public String email;
+
+    public Integer age;
+
+    public String telephone;
+
 
 }
