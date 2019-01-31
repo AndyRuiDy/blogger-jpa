@@ -1,7 +1,108 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         id="WebApp_ID" version="3.1">
 
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
+  <display-name>blogger-jpa</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+  <!-- 配置spring -->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:applicationContext.xml</param-value>
+  </context-param>
+
+  <!-- 监听器作用：启动Web容器时，自动装配ApplicationContext的配置信息 -->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <!-- 配置字符编码过滤器 -->
+  <!-- 字符编码过滤器必须配置在所有过滤器的最前面! -->
+  <filter>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- 配置可以把 POST 请求转为 PUT、DELETE 请求的 Filter -->
+  <filter>
+    <filter-name>HiddenHttpMethodFilter</filter-name>
+    <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>HiddenHttpMethodFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- 配置 OpenEntityManagerInViewFilter. 可以解决懒加载异常的问题 -->
+  <filter>
+    <filter-name>OpenEntityManagerInViewFilter</filter-name>
+    <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>OpenEntityManagerInViewFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- shiro控制权限、加密 -->
+  <!-- 	<filter>
+          <filter-name>shiroFilter</filter-name>
+          <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+          <init-param>
+              <param-name>targetFilterLifecycle</param-name>
+              <param-value>true</param-value>
+          </init-param>
+      </filter>
+      <filter-mapping>
+          <filter-name>shiroFilter</filter-name>
+          <url-pattern>/*</url-pattern>
+      </filter-mapping> -->
+
+  <!-- 配置Spring MVC -->
+  <servlet>
+    <servlet-name>blogger-jpa</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:springmvc.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>blogger-jpa</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+  <!-- 设置session失效时间，单位分钟；不配置默认是20分钟 -->
+  <session-config>
+    <session-timeout>30</session-timeout>
+    <!-- <tracking-mode>COOKIE</tracking-mode> -->
+  </session-config>
+
+  <!-- 服务器发生错误时，跳转的界面 -->
+  <!--<error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/common/500.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/common/500</location>
+  </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/common/404</location>
+  </error-page>-->
+
 </web-app>
