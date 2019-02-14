@@ -92,17 +92,17 @@
   </session-config>
 
   <!-- 服务器发生错误时，跳转的界面 -->
-  <!--<error-page>
+  <error-page>
     <exception-type>java.lang.Throwable</exception-type>
-    <location>/common/500.jsp</location>
+    <location>/WEB-INF/views/common/500.jsp</location>
   </error-page>
   <error-page>
     <error-code>500</error-code>
-    <location>/common/500</location>
+    <location>/WEB-INF/views/common/500.jsp</location>
   </error-page>
   <error-page>
     <error-code>404</error-code>
-    <location>/common/404</location>
-  </error-page>-->
+    <location>/WEB-INF/views/common/404.jsp</location>
+  </error-page>
 
 </web-app>
